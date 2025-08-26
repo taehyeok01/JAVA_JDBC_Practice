@@ -44,9 +44,11 @@ public class MemberView {
 				printOne(member);
 				break;
 			case 4: 
-				
+				// 아이디 받기
 				memberId = inputMemberID();
+				// 수정할 정보 받기
 				member = modifyMember(memberId);
+				// 결과에 따른 출력 메세지
 				result = mController.updateMember(member);
 				if(result > 0) {
 					printMessage("회원 정보 수정완료");
@@ -56,11 +58,17 @@ public class MemberView {
 				break;
 			case 5: 
 				memberId = inputMemberID();
-				result = mController.deleteMember(memberId);
-				if (result > 0) {
-					System.out.println("회원 삭제완료");
+				member = mController.findOneById(memberId);
+				if(member != null) {
+					result = mController.deleteMember(memberId);
+					// 입력 받은 아이디로 회원 정보가 존재하는지
+					if (result > 0) {
+						printMessage("회원 삭제완료");
+					} else {
+						printMessage("회원 삭제실패");
+					}
 				} else {
-					System.out.println("회원 삭제실패");
+					printMessage("해당 회원이 존재하지 않습니다.");
 				}
 				break;
 			case 0: 
