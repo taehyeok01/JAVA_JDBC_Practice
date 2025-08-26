@@ -46,14 +46,18 @@ public class MemberView {
 			case 4: 
 				// 아이디 받기
 				memberId = inputMemberID();
-				// 수정할 정보 받기
-				member = modifyMember(memberId);
-				// 결과에 따른 출력 메세지
-				result = mController.updateMember(member);
-				if(result > 0) {
-					printMessage("회원 정보 수정완료");
+				member = mController.findOneById(memberId);
+				if(member != null) {	
+					// 수정할 정보 받기
+					member = modifyMember(memberId);
+					result = mController.updateMember(member);
+					if(result > 0) {
+						printMessage("회원 정보 수정완료");
+					} else {
+						printMessage("회원 정보 수정실패");
+					}
 				} else {
-					printMessage("회원 정보 수정실패");
+					printMessage("해당 회원이 존재하지 않습니다.");
 				}
 				break;
 			case 5: 
